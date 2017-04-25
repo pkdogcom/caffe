@@ -151,3 +151,4 @@ inline void createActivationDescriptor(cudnnActivationDescriptor_t* activ_desc,
 
 #endif  // USE_CUDNN
 #endif  // CAFFE_UTIL_CUDNN_H_
+
