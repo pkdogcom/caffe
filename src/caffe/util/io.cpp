@@ -258,6 +258,7 @@ bool ReadFileToDatum(const string& filename, const int label,
 bool ReadXMLToAnnotatedDatum(const string& labelfile, const int img_height,
     const int img_width, const std::map<string, int>& name_to_label,
     AnnotatedDatum* anno_datum) {
+  bool status = false;
   ptree pt;
   read_xml(labelfile, pt);
 
@@ -289,8 +290,10 @@ bool ReadXMLToAnnotatedDatum(const string& labelfile, const int img_height,
         if (v2.first == "name") {
           string name = pt2.data();
           if (name_to_label.find(name) == name_to_label.end()) {
-            LOG(FATAL) << "Unknown name: " << name;
+            break; // Ignore unknown name
+            //LOG(FATAL) << "Unknown name: " << name;
           }
+          status = true;
           int label = name_to_label.find(name)->second;
           bool found_group = false;
           for (int g = 0; g < anno_datum->annotation_group_size(); ++g) {
@@ -354,13 +357,14 @@ bool ReadXMLToAnnotatedDatum(const string& labelfile, const int img_height,
       }
     }
   }
-  return true;
+  return status;
 }
 
 // Parse MSCOCO detection annotation.
 bool ReadJSONToAnnotatedDatum(const string& labelfile, const int img_height,
     const int img_width, const std::map<string, int>& name_to_label,
     AnnotatedDatum* anno_datum) {
+  bool status = false;
   ptree pt;
   read_json(labelfile, pt);
 
@@ -390,8 +394,10 @@ bool ReadJSONToAnnotatedDatum(const string& labelfile, const int img_height,
     // Get category_id.
     string name = object.get<string>("category_id");
     if (name_to_label.find(name) == name_to_label.end()) {
-      LOG(FATAL) << "Unknown name: " << name;
+      continue;
+      //LOG(FATAL) << "Unknown name: " << name;
     }
+    status = true;
     int label = name_to_label.find(name)->second;
     bool found_group = false;
     for (int g = 0; g < anno_datum->annotation_group_size(); ++g) {
@@ -459,7 +465,7 @@ bool ReadJSONToAnnotatedDatum(const string& labelfile, const int img_height,
     bbox->set_ymax(ymax / height);
     bbox->set_difficult(iscrowd);
   }
-  return true;
+  return status;
 }
 
 // Parse plain txt detection annotation: label_id, xmin, ymin, xmax, ymax.

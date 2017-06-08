@@ -263,7 +263,8 @@ pretrain_model = "models/VGGNet/VGG_ILSVRC_16_layers_fc_reduced.caffemodel"
 label_map_file = "data/VOC0712/labelmap_voc.prototxt"
 
 # MultiBoxLoss parameters.
-num_classes = 21
+#num_classes = 21
+num_classes = 3
 share_location = True
 background_label_id=0
 train_on_diff_gt = True
@@ -329,15 +330,15 @@ clip = False
 
 # Solver parameters.
 # Defining which GPUs to use.
-gpus = "0,1,2,3"
+gpus = "1"
 gpulist = gpus.split(",")
 num_gpus = len(gpulist)
 
 # Divide the mini-batch to different GPUs.
-batch_size = 32
+batch_size = 16
 accum_batch_size = 32
 iter_size = accum_batch_size / batch_size
-solver_mode = P.Solver.CPU
+solver_mode = P.Solver.GPU
 device_id = 0
 batch_size_per_device = batch_size
 if num_gpus > 0:
@@ -381,6 +382,7 @@ solver_param = {
     'debug_info': False,
     'snapshot_after_train': True,
     # Test parameters
+    'show_per_class_result': True,
     'test_iter': [test_iter],
     'test_interval': 10000,
     'eval_type': "detection",

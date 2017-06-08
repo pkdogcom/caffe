@@ -274,7 +274,8 @@ pretrain_model = "{}_iter_{}.caffemodel".format(snapshot_prefix, max_iter)
 label_map_file = "data/VOC0712/labelmap_voc.prototxt"
 
 # MultiBoxLoss parameters.
-num_classes = 21
+#num_classes = 21
+num_classes = 3
 share_location = True
 background_label_id=0
 train_on_diff_gt = True
@@ -392,6 +393,7 @@ solver_param = {
     'debug_info': False,
     'snapshot_after_train': False,
     # Test parameters
+    'show_per_class_result': True,
     'test_iter': [test_iter],
     'test_interval': 10000,
     'eval_type': "detection",
