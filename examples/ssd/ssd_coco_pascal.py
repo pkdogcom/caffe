@@ -265,8 +265,7 @@ pretrain_model = "models/VGGNet/VGG_ILSVRC_16_layers_fc_reduced.caffemodel"
 label_map_file = "data/coco/labelmap_coco.prototxt"
 
 # MultiBoxLoss parameters.
-#num_classes = 81
-num_classes = 3
+num_classes = 81
 share_location = True
 background_label_id=0
 train_on_diff_gt = False
@@ -332,7 +331,7 @@ clip = False
 
 # Solver parameters.
 # Defining which GPUs to use.
-gpus = "0,1"
+gpus = "0,1,2,3"
 gpulist = gpus.split(",")
 num_gpus = len(gpulist)
 
@@ -382,7 +381,6 @@ solver_param = {
     'debug_info': False,
     'snapshot_after_train': True,
     # Test parameters
-    'show_per_class_result': True,
     'test_iter': [test_iter],
     'test_interval': 10000,
     'eval_type': "detection",
