@@ -327,10 +327,8 @@ max_sizes = []
 for ratio in xrange(min_ratio, max_ratio + 1, step):
   min_sizes.append(min_dim * ratio / 100.)
   max_sizes.append(min_dim * (ratio + step) / 100.)
-# min_sizes = [min_dim * 7 / 100.] + min_sizes
-# max_sizes = [min_dim * 15 / 100.] + max_sizes
-min_sizes = [min_dim * 10 / 100.] + min_sizes
-max_sizes = [min_dim * 20 / 100.] + max_sizes
+min_sizes = [min_dim * 7 / 100.] + min_sizes
+max_sizes = [min_dim * 15 / 100.] + max_sizes
 steps = [8, 16, 32, 64, 100, 300]
 aspect_ratios = [[2], [2, 3], [2, 3], [2, 3], [2], [2]]
 # L2 normalize conv4_3.
