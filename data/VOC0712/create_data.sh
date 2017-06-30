@@ -3,7 +3,7 @@ root_dir=$cur_dir/../..
 
 cd $root_dir
 
-redo=1
+redo=false
 data_root_dir="$HOME/data/VOCdevkit"
 dataset_name="VOC0712"
 mapfile="$root_dir/data/$dataset_name/labelmap_voc.prototxt"
@@ -15,7 +15,7 @@ width=0
 height=0
 
 extra_cmd="--encode-type=jpg --encoded"
-if [ $redo ]
+if $redo
 then
   extra_cmd="$extra_cmd --redo"
 fi
